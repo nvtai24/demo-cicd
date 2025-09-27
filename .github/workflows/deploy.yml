@@ -3,27 +3,27 @@ name: CI/CD Deploy to EC2
 on:
   push:
     branches:
-      - main   # Runs only when code is pushed to "main"
+      - main # Runs only when code is pushed to "main"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Run tests
-      run: echo "No tests yet"
+      - name: Run tests
+        run: echo "No tests yet"
 
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.8
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd /var/www/myapp
-          git pull origin main
-          npm install --production
-          pm2 restart myapp || pm2 start index.js --name myapp
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /var/www/myapp
+            git pull origin main
+            npm install --production
+            pm2 restart myapp || pm2 start index.js --name myapp
